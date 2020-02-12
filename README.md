@@ -1,4 +1,4 @@
-# simple-alert
+# Simple Alert
 Simple Alert - WordPress Plugin
 
 This is a simple alert box plugin which is configurable from wp-admin settings where user have choice to select post, page or custom post type to show alert box with custom text.
