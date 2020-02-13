@@ -11,7 +11,51 @@ class Simple_Alert_Admin {
 	}
 	public function simple_alert_settings(){
 		$post_types = get_post_types( array('public'   => true,'_builtin' => false), 'names', 'and' );
+		/**
+		* Such small css and js should be inline to avoid additional request which help to increase site speed
+		*/
 		?>
+		<style type="text/css">
+			.sa_post_ul_li{
+				display: none;
+				max-width: 75%;
+				padding: 20px;
+				border-radius: 4px;
+				background:#fff;
+				-webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.29);
+				-moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.29);
+				box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.29);
+			}
+		</style>
+		<script type="text/javascript">
+			jQuery(document).ready(function(){
+				(function($){
+
+					$('input[name="sa_set_posts[]"').change(function(){
+						if ($(this).is(':checked')) {
+							$(this).parents('td').children('.sa_post_ul_li').show(300);
+						}
+						else{
+							$(this).parents('td').children('.sa_post_ul_li').hide(300);
+						}
+					});
+
+					$('input[name="sa_select_all[]"').change(function(){
+						if ($(this).is(':checked')) {
+							$(this).parents('ul').children('li').children('label').children('.sa_single_post_cb').prop("checked", true);
+						}
+						else{
+							$(this).parents('ul').children('li').children('label').children('.sa_single_post_cb').prop("checked", false);
+						}
+					});
+					
+					$.each($('input[name="sa_set_posts[]"]:checked'),function(i){
+						$(this).parents('td').children('.sa_post_ul_li').show();
+					});
+
+				}(jQuery))
+			});
+		</script>
 		<div class="wrap">
 			<h1><?php echo __('Simple Alert Settings','simple-alert'); ?></h1>
 			<h3><?php echo __('Select below post type to show alert','simple-alert'); ?></h3>
@@ -20,24 +64,28 @@ class Simple_Alert_Admin {
 				if(isset($_POST['alerttext'])){
 					update_option('simple_alert_text',$_POST['alerttext']);
 					if(isset($_POST['sa_set_posts'])){
-						update_option('simple_alert_is_posts',$_POST['sa_set_posts']);	
+						update_option('sa_post_types',$_POST['sa_set_posts']);	
+					}
+					if(isset($_POST['sa_single_post'])){
+						update_option('sa_single_post',$_POST['sa_single_post']);
 					}
 				}
 				
-				$save_posts 	=	get_option('simple_alert_is_posts');
+				$save_post_types 	=	get_option('sa_post_types');
 
-				if(in_array('post',$save_posts)){
+				if(in_array('post',$save_post_types)){
 					$is_posts=1;
 				}
 				else{
 					$is_posts=0;
 				}
-				if(in_array('page',$save_posts)){
+				if(in_array('page',$save_post_types)){
 					$is_pages=1;
 				}
 				else{
 					$is_pages=0;
 				}
+				
 				?>
 				<table class="form-table" role="presentation"><tbody>
 					<tr>
@@ -48,14 +96,16 @@ class Simple_Alert_Admin {
 					<tr>
 						<th scope="row"><label for="setposts">Posts</label></th>
 						<td>
-							<label for="sa_set_posts"><input name="sa_set_posts[]" type="checkbox" id="sa_set_posts" value="post" <?php if($is_posts==1){ echo 'checked'; }?>> show alert in posts</label>
+							<label for="sa_set_posts"><input name="sa_set_posts[]" type="checkbox" id="sa_set_posts" value="post" <?php if($is_posts==1){ echo 'checked'; }?>> <b>show alert in posts</b></label>
+							<?php Simple_Alert_Admin::get_posts_of_post_type('post'); ?>
 						</td>
 					</tr>
 
 					<tr>
 						<th scope="row"><label for="setpages">Pages</label></th>
 						<td>
-							<label for="sa_set_pages"><input name="sa_set_posts[]" type="checkbox" id="sa_set_pages" value="page" <?php if($is_pages==1){ echo 'checked'; }?>> show alert in pages</label>
+							<label for="sa_set_pages"><input name="sa_set_posts[]" type="checkbox" id="sa_set_pages" value="page" <?php if($is_pages==1){ echo 'checked'; }?>> <b>show alert in pages</b></label>
+							<?php Simple_Alert_Admin::get_posts_of_post_type('page'); ?>
 						</td>
 					</tr>
 					<?php
@@ -66,7 +116,8 @@ class Simple_Alert_Admin {
 							<tr>
 								<th scope="row"><label for="set<?php echo $post_type; ?>"><?php echo $post_type; ?></label></th>
 								<td>
-									<label for="sa_set_<?php echo $post_type; ?>"><input name="sa_set_posts[]" type="checkbox" id="sa_set_<?php echo $post_type; ?>" value="<?php echo $post_type; ?>"<?php if(in_array($post_type,$save_posts)){ echo 'checked'; } ?>> show alert in <?php echo $post_type; ?></label>
+									<label for="sa_set_<?php echo $post_type; ?>"><input name="sa_set_posts[]" type="checkbox" id="sa_set_<?php echo $post_type; ?>" value="<?php echo $post_type; ?>"<?php if(in_array($post_type,$save_post_types)){ echo 'checked'; } ?>> <b>show alert in <?php echo $post_type; ?></b></label>
+									<?php Simple_Alert_Admin::get_posts_of_post_type($post_type); ?>
 								</td>
 							</tr>
 							<?php
@@ -82,6 +133,30 @@ class Simple_Alert_Admin {
 			</form>
 		</div>
 		<?php
+	}
+	public function get_posts_of_post_type($post_type){
+		$save_single_post 	=	get_option('sa_single_post');
+		$args 	=	array(
+			'numberposts'   => -1,
+			'post_type'     => $post_type,
+			'post_status'	=> 'publish'
+		);
+		$posts 	=	get_posts($args);
+		if($posts){
+			echo '<ul class="sa_post_ul_li">';
+			echo '<li><lable for="sa_select_all_'.$post_type.'"><input name="sa_select_all[]" id="sa_select_all_'.$post_type.'" class="sa_select_all" type="checkbox"> Select All</lable></li>';
+			foreach($posts as $post){
+				$id 	=	$post->ID;
+				$title	= 	$post->post_title;
+				echo '<li><label for="sa_single_post_'.$id.'"><input class="sa_single_post_cb" id="sa_single_post_'.$id.'" name="sa_single_post[]" type="checkbox" value="'.$id.'" ';
+				if($save_single_post){
+					if(in_array($id,$save_single_post)){ echo 'checked'; }	
+				}
+				echo '>'.$title.'</label></li>';
+			}
+			echo '</ul>';
+		}
+		
 	}
 
 }
