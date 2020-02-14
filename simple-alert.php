@@ -37,3 +37,11 @@ require plugin_dir_path( __FILE__ ) . 'public/class-simple-alert-public.php';
 
 $simpleAlertAdmin = new Simple_Alert_Admin();
 $simpleAlertPublic = new Simple_Alert_Public();
+
+add_action( 'init', 'simple_alert_load_plugin_textdomain');
+function simple_alert_load_plugin_textdomain(){
+	$domain 	= 	'simple-alert';
+	$locale 	= 	apply_filters('plugin_locale',get_locale(),$domain);
+	load_textdomain($domain,trailingslashit(WP_LANG_DIR).$domain.'/'.$domain.'-'.$locale.'.mo');
+	load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
