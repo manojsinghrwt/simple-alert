@@ -1,0 +1,10 @@
+.sa_post_ul_li{
+	display: none;
+	max-width: 75%;
+	padding: 20px;
+	border-radius: 4px;
+	background:#fff;
+	-webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.29);
+	-moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.29);
+	box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.29);
+}
