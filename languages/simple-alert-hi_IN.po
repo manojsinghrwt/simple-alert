@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple Alert\n"
-"POT-Creation-Date: 2020-02-14 15:47+0530\n"
-"PO-Revision-Date: 2020-02-14 15:47+0530\n"
+"POT-Creation-Date: 2020-02-20 15:24+0530\n"
+"PO-Revision-Date: 2020-02-20 15:24+0530\n"
 "Last-Translator: Manoj Singh <msinghrwt@gmail.com>\n"
 "Language-Team: Manoj Singh <msinghrwt@gmail.com>\n"
 "Language: hi_IN\n"
@@ -20,56 +20,47 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: admin/class-simple-alert-admin.php:10
-#: admin/class-simple-alert-admin.php:60
+#: admin/class-simple-alert-admin.php:16
 msgid "Simple Alert Settings"
 msgstr "सरल चेतावनी सेटिंग्स"
 
 #: admin/class-simple-alert-admin.php:10
 msgid "Simple Alert"
-msgstr "सरल अलर्ट"
+msgstr "सरल चेतावनी"
 
-#: admin/class-simple-alert-admin.php:61
+#: admin/class-simple-alert-admin.php:17
 msgid "Select below post type to show alert"
 msgstr "अलर्ट दिखाने के लिए नीचे पोस्ट प्रकार का चयन करें"
 
-#: admin/class-simple-alert-admin.php:92
+#: admin/class-simple-alert-admin.php:46
 msgid "Alert Text"
 msgstr "अलर्ट टेक्स्ट"
 
-#: admin/class-simple-alert-admin.php:94
+#: admin/class-simple-alert-admin.php:48
 msgid "This text will be show in alert box"
 msgstr "यह टेक्स्ट अलर्ट बॉक्स में दिखाया जाएगा"
 
-#: admin/class-simple-alert-admin.php:97
+#: admin/class-simple-alert-admin.php:51
 msgid "Posts"
 msgstr "पोस्ट"
 
-#: admin/class-simple-alert-admin.php:99
+#: admin/class-simple-alert-admin.php:53
 msgid "show alert in posts"
 msgstr "पोस्ट में चेतावनी दिखाएं"
 
-#: admin/class-simple-alert-admin.php:105
+#: admin/class-simple-alert-admin.php:59
 msgid "Pages"
 msgstr "पृष्ठ"
 
-#: admin/class-simple-alert-admin.php:107
+#: admin/class-simple-alert-admin.php:61
 msgid "show alert in pages"
 msgstr "पृष्ठों में चेतावनी दिखाएं"
 
-#: admin/class-simple-alert-admin.php:123
+#: admin/class-simple-alert-admin.php:77
 #, php-format
 msgid "show alert in %s."
-msgstr "%s में चेतावनी दिखाएं"
+msgstr "%s में सतर्कता दिखाएं"
 
-#: admin/class-simple-alert-admin.php:151
+#: admin/class-simple-alert-admin.php:105
 msgid "Select All"
 msgstr "सभी का चयन करें"
-
-#~ msgid "show alert for %s."
-#~ msgstr "%s में चेतावनी दिखाएं"
-
-#~ msgid "Show alert in %s "
-#~ msgstr "%s में चेतावनी दिखाएं"
-
-#~ msgid "show alert in %s"
-#~ msgstr "%s में चेतावनी दिखाएं"
