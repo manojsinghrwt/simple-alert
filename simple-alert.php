@@ -27,13 +27,14 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Currently plugin version.
  */
-define( 'SIMPLE_ALERT_VERSION', '1.0.1' );
+define( 'SIMPLE_ALERT_VERSION', '1.0.0' );
 
 /**
  * Begins execution of the plugin.
  */
 require plugin_dir_path( __FILE__ ) . 'admin/class-simple-alert-admin.php';
 require plugin_dir_path( __FILE__ ) . 'public/class-simple-alert-public.php';
+
 /**
  * Register the Style for the admin area.
  *
@@ -56,3 +57,11 @@ function simple_alert_admin_scripts() {
 add_action( 'admin_enqueue_scripts', 'simple_alert_admin_scripts' );
 $simpleAlertAdmin = new Simple_Alert_Admin();
 $simpleAlertPublic = new Simple_Alert_Public();
+
+add_action( 'init', 'simple_alert_load_plugin_textdomain');
+function simple_alert_load_plugin_textdomain(){
+	$domain 	= 	'simple-alert';
+	$locale 	= 	apply_filters('plugin_locale',get_locale(),$domain);
+	load_textdomain($domain,trailingslashit(WP_LANG_DIR).$domain.'/'.$domain.'-'.$locale.'.mo');
+	load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
